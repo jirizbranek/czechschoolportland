@@ -1,0 +1,352 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="admin-section">
+    <div class="section-header">
+        <h1>Mailing List Management</h1>
+        <a href="{{ url_for('admin.admin_home') }}" class="btn btn-secondary">← Back to Dashboard</a>
+    </div>
+
+    <div class="mailing-container">
+        <div class="mailing-stats">
+            <div class="stat-card">
+                <h3>Total Subscribers</h3>
+                <div class="stat-number">{{ mailing_list|length }}</div>
+            </div>
+            <div class="copy-section">
+                <button onclick="copyAllEmails()" class="btn btn-copy" id="copyButton">
+                    📋 Copy All Emails
+                </button>
+                <div id="copyMessage" class="copy-message" style="display: none;">
+                    Emails copied to clipboard!
+                </div>
+            </div>
+        </div>
+
+        <div class="mailing-list-section">
+            <h2>Current Subscribers</h2>
+            {% if mailing_list %}
+            <div class="mailing-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Email Address</th>
+                            <th>Subscription Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for email in mailing_list %}
+                        <tr>
+                            <td>{{ email[0] }}</td>
+                            <td>{{ email[1] }}</td>
+                            <td>
+                                {% if email[2] %}
+                                {{ email[2][:10] }} at {{ email[2][11:16] }}
+                                {% else %}
+                                Unknown
+                                {% endif %}
+                            </td>
+                            <td>
+                                <form method="post" style="display: inline;">
+                                    <button type="submit" name="delete_email" value="{{ email[0] }}"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Are you sure you want to remove {{ email[1] }} from the mailing list?')">
+                                        Remove
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="no-subscribers">
+                <p>No subscribers found in the mailing list.</p>
+                <p>Subscribers can be added through the main website's subscription form.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .admin-section {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .mailing-container {
+        margin-top: 20px;
+    }
+
+    .mailing-stats {
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        max-width: 200px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .stat-card h3 {
+        margin: 0 0 10px 0;
+        font-size: 16px;
+        opacity: 0.9;
+    }
+
+    .stat-number {
+        font-size: 36px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    .mailing-list-section {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+
+    .mailing-list-section h2 {
+        background: #f8f9fa;
+        margin: 0;
+        padding: 20px;
+        border-bottom: 1px solid #dee2e6;
+        color: #495057;
+    }
+
+    .mailing-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .mailing-table th,
+    .mailing-table td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .mailing-table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .mailing-table tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .mailing-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .no-subscribers {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+    }
+
+    .no-subscribers p {
+        margin: 10px 0;
+        line-height: 1.5;
+    }
+
+    .no-subscribers p:first-child {
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #545b62;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+
+    .copy-section {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    .btn-copy {
+        background-color: #28a745;
+        color: white;
+        padding: 12px 20px;
+        font-size: 14px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+    .btn-copy:hover {
+        background-color: #218838;
+        transform: translateY(-1px);
+    }
+
+    .copy-message {
+        background-color: #d4edda;
+        color: #155724;
+        padding: 8px 12px;
+        border-radius: 4px;
+        margin-top: 10px;
+        border: 1px solid #c3e6cb;
+        font-size: 14px;
+        animation: fadeInOut 3s ease-in-out;
+    }
+
+    @keyframes fadeInOut {
+        0% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        20% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        80% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        100% {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .mailing-table {
+            overflow-x: auto;
+        }
+
+        .stat-card {
+            max-width: 100%;
+        }
+    }
+</style>
+
+<script>
+    function copyAllEmails() {
+        // Get all email addresses from the table by reading the DOM
+        const emailCells = document.querySelectorAll('.mailing-table tbody tr td:nth-child(2)');
+        const emails = [];
+
+        emailCells.forEach(function (cell) {
+            emails.push(cell.textContent.trim());
+        });
+
+        if (emails.length === 0) {
+            alert('No emails found to copy.');
+            return;
+        }
+
+        // Join emails with commas and spaces
+        const emailString = emails.join(', ');
+
+        // Copy to clipboard using the modern Clipboard API
+        if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(emailString).then(function () {
+                showCopyMessage();
+            }).catch(function (err) {
+                // Fallback for older browsers
+                fallbackCopyToClipboard(emailString);
+            });
+        } else {
+            // Fallback for older browsers or non-HTTPS
+            fallbackCopyToClipboard(emailString);
+        }
+    }
+
+    function fallbackCopyToClipboard(text) {
+        // Create a temporary textarea element
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+
+        try {
+            document.execCommand('copy');
+            showCopyMessage();
+        } catch (err) {
+            console.error('Failed to copy emails to clipboard', err);
+            alert('Failed to copy emails to clipboard. Please try again.');
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    function showCopyMessage() {
+        const message = document.getElementById('copyMessage');
+        const button = document.getElementById('copyButton');
+
+        // Show success message
+        message.style.display = 'block';
+        button.textContent = '✅ Copied!';
+        button.style.backgroundColor = '#28a745';
+
+        // Reset after 3 seconds
+        setTimeout(function () {
+            message.style.display = 'none';
+            button.textContent = '📋 Copy All Emails';
+            button.style.backgroundColor = '#28a745';
+        }, 3000);
+    }
+</script>
+
+{% endblock %}

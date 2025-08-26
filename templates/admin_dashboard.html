@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="admin-dashboard">
+    <h1>Admin Dashboard</h1>
+    <p>Welcome to the Czech School Portland administration panel. Please select a management option below:</p>
+
+    <div class="dashboard-nav">
+        <div class="nav-card">
+            <h3>Event Management</h3>
+            <p>Add, edit, and delete school events and calendar items.</p>
+            <a href="{{ url_for('admin.manage_events') }}" class="btn btn-primary">Manage Events</a>
+        </div>
+
+        <div class="nav-card">
+            <h3>Mailing List Management</h3>
+            <p>View and manage the school's mailing list subscribers.</p>
+            <a href="{{ url_for('admin.manage_mailing') }}" class="btn btn-primary">Manage Mailing List</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .admin-dashboard {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .dashboard-nav {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-top: 30px;
+    }
+
+    .nav-card {
+        background: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        transition: transform 0.2s ease;
+    }
+
+    .nav-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-card h3 {
+        color: #495057;
+        margin-bottom: 10px;
+    }
+
+    .nav-card p {
+        color: #6c757d;
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

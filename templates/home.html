@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<img src="{{ url_for('static', filename='images/school.png') }}" alt="School" width="500">
+
+<h2>Explore</h2>
+<div class="explore-panels">
+  <div class="about-panel">
+    <h3>About us</h3>
+    <p>Czech School of Portland was founded on April 18, 2012 by Katerina Bohadlova and Lida and Teresa O'Donnell.
+      <a href="/about" class="panel-button">Learn More.</a>
+    </p>
+  </div>
+  <div class="about-panel">
+    <h3>Classes</h3>
+    <p>abc.</p>
+    <a href="/classes" class="panel-button">Learn More</a>
+  </div>
+  <div class="about-panel">
+    <h3>Teachers</h3>
+    <p>Meet our dedicated teachers who are passionate about teaching the Czech language and culture.</p>
+    <a href="/teachers" class="panel-button">Learn More</a>
+  </div>
+  <div class="about-panel">
+    <h3>Calendar</h3>
+    <p>Stay updated with our school events and important dates.</p>
+    <a href="/calendar" class="panel-button">Learn More</a>
+  </div>
+</div>
+
+<h2>Next Event</h2>
+{% if next_event %}
+<div class="next-event-info">
+  <p><strong>{{ next_event[0] }}</strong> on {{ next_event[1] }}</p>
+  {% if next_event[4] %}
+  <p><strong>Time:</strong> {{ next_event[4] }}</p>
+  {% endif %}
+  {% if next_event[3] %}
+  <p><strong>Location:</strong> {{ next_event[3] }}</p>
+  {% endif %}
+  {% if next_event[2] %}
+  <p><strong>Description:</strong> {{ next_event[2] }}</p>
+  {% endif %}
+  {% if next_event[5] %}
+  <p><a href="{{ next_event[5] }}" target="_blank" class="event-invitation-link">View Invitation</a></p>
+  {% endif %}
+</div>
+{% else %}
+<p>No upcoming events.</p>
+{% endif %}
+
+<h2>Subscribe to our mailing list</h2>
+<form method="post" action="/subscribe">
+  <input type="email" name="email" placeholder="Your email" required>
+  <button type="submit">Manage your subscription</button>
+</form>
+
+{% endblock %}

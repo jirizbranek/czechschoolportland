@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Our Teachers</h1>
+<p>Meet our dedicated team of teachers:</p>
+
+<div class="teachers-grid">
+  <div class="teacher-card">
+    <img src="{{ url_for('static', filename='images/teachers/teacher1.jpg') }}" alt="Teacher 1">
+    <h3>Ms. Johnson</h3>
+    <p>Mathematics</p>
+  </div>
+  <div class="teacher-card">
+    <img src="{{ url_for('static', filename='images/teachers/teacher2.jpg') }}" alt="Teacher 2">
+    <h3>Mr. Smith</h3>
+    <p>Science</p>
+  </div>
+  <div class="teacher-card">
+    <img src="{{ url_for('static', filename='images/teachers/teacher3.jpg') }}" alt="Teacher 3">
+    <h3>Mrs. Davis</h3>
+    <p>English</p>
+  </div>
+</div>
+{% endblock %}

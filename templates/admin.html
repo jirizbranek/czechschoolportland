@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<h2>Mailing List</h2>
+<table>
+  <tr><th>Email</th><th>Action</th></tr>
+  {% for email in mailing_list %}
+  <tr>
+    <td>{{ email[1] }}</td>
+    <td>
+      <form method="post">
+        <button type="submit" name="delete_email" value="{{ email[0] }}">Delete</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h2>Events</h2>
+<table>
+  <tr><th>Title</th><th>Date</th><th>Description</th><th>Action</th></tr>
+  {% for e in events %}
+  <tr>
+    <td>{{ e[1] }}</td>
+    <td>{{ e[2] }}</td>
+    <td>{{ e[3] }}</td>
+    <td>
+      <form method="post">
+        <button type="submit" name="delete_event" value="{{ e[0] }}">Delete</button>
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+
+<h3>Add Event</h3>
+<form method="post">
+  <input type="text" name="title" placeholder="Event Title" required><br>
+  <input type="date" name="date" required><br>
+  <textarea name="description" placeholder="Description"></textarea><br>
+  <button type="submit" name="add_event">Add Event</button>
+</form>
+{% endblock %}

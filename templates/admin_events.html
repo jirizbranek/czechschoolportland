@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="admin-section">
+    <div class="section-header">
+        <h1>Event Management</h1>
+        <div class="header-buttons">
+            <a href="{{ url_for('admin.add_event_form') }}" class="btn btn-primary">+ Add New Event</a>
+            <a href="{{ url_for('admin.admin_home') }}" class="btn btn-secondary">← Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="events-container">
+        <div class="events-list-section">
+            <h2>Current Events</h2>
+            {% if events %}
+            <div class="events-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Location</th>
+                            <th>Description</th>
+                            <th>Invitation</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for e in events %}
+                        <tr>
+                            <td>{{ e[1] }}</td>
+                            <td>{{ e[2] }}</td>
+                            <td>{{ e[5] or '-' }}</td>
+                            <td>{{ e[4] or '-' }}</td>
+                            <td>{{ e[3] }}</td>
+                            <td>
+                                {% if e[6] %}
+                                <a href="{{ e[6] }}" target="_blank">Link</a>
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{{ url_for('admin.edit_event_form', event_id=e[0]) }}"
+                                        class="btn btn-primary btn-sm">
+                                        Edit
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="no-events">
+                <p>No events found.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .admin-section {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #dee2e6;
+    }
+
+    .header-buttons {
+        display: flex;
+        gap: 15px;
+    }
+
+    .events-container {
+        margin-top: 20px;
+    }
+
+    .events-table table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .events-table th,
+    .events-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .events-table th {
+        background-color: #f8f9fa;
+        font-weight: bold;
+        color: #495057;
+    }
+
+    .events-table tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+    }
+
+    .no-events {
+        text-align: center;
+        color: #6c757d;
+        font-style: italic;
+        padding: 40px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 8px 16px;
+        text-decoration: none;
+        border: none;
+        border-radius: 4px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #545b62;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+    }
+
+    .btn-sm {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
+    @media (max-width: 768px) {
+        .events-container {
+            grid-template-columns: 1fr;
+        }
+
+        .section-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+    }
+</style>
+{% endblock %}

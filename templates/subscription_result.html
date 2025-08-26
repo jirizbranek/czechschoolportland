@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="subscription-result">
+    {% if action == "subscribed" %}
+    <div class="result-card success">
+        <div class="icon">✅</div>
+        <h1>Successfully Subscribed!</h1>
+        <p>Thank you! We've added <strong>{{ email }}</strong> to our mailing list.</p>
+        <p>You'll now receive updates about Czech School Portland events, classes, and important announcements.</p>
+    </div>
+    {% elif action == "unsubscribed" %}
+    <div class="result-card success">
+        <div class="icon">✅</div>
+        <h1>Successfully Unsubscribed</h1>
+        <p>We've removed <strong>{{ email }}</strong> from our mailing list.</p>
+        <p>You'll no longer receive emails from Czech School Portland. We're sorry to see you go!</p>
+    </div>
+    {% elif action == "not_found" %}
+    <div class="result-card warning">
+        <div class="icon">⚠️</div>
+        <h1>Email Not Found</h1>
+        <p>The email <strong>{{ email }}</strong> was not found in our mailing list.</p>
+        <p>It may have already been removed or never been subscribed.</p>
+    </div>
+    {% endif %}
+
+    <div class="next-steps">
+        <h3>What's Next?</h3>
+        {% if action == "subscribed" %}
+        <p>You can unsubscribe at any time by entering your email again on our homepage.</p>
+        <p>Check out our upcoming events and classes!</p>
+        {% elif action == "unsubscribed" %}
+        <p>You can resubscribe at any time by visiting our homepage and entering your email.</p>
+        <p>We'd love to have you back in our community!</p>
+        {% else %}
+        <p>If you'd like to subscribe, please return to our homepage and enter your email.</p>
+        {% endif %}
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ url_for('main.home') }}" class="btn btn-primary">Back to Home</a>
+        {% if action in ["unsubscribed", "not_found"] %}
+        <a href="{{ url_for('main.home') }}#subscribe" class="btn btn-secondary">Subscribe Now</a>
+        {% else %}
+        <a href="{{ url_for('main.calendar') }}" class="btn btn-secondary">View Calendar</a>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .subscription-result {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .result-card {
+        background: white;
+        border-radius: 12px;
+        padding: 40px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin-bottom: 30px;
+        border-left: 5px solid;
+    }
+
+    .result-card.success {
+        border-left-color: #28a745;
+        background: linear-gradient(135deg, #f8fff9, #ffffff);
+    }
+
+    .result-card.warning {
+        border-left-color: #ffc107;
+        background: linear-gradient(135deg, #fffdf0, #ffffff);
+    }
+
+    .result-card .icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+        opacity: 0.8;
+    }
+
+    .result-card h1 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 28px;
+    }
+
+    .result-card p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 10px;
+    }
+
+    .next-steps {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 25px;
+        margin-bottom: 30px;
+        border: 1px solid #dee2e6;
+    }
+
+    .next-steps h3 {
+        color: #495057;
+        margin-bottom: 15px;
+        font-size: 18px;
+    }
+
+    .next-steps p {
+        color: #6c757d;
+        margin-bottom: 10px;
+        line-height: 1.5;
+    }
+
+    .action-buttons {
+        text-align: center;
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        transition: all 0.2s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #545b62;
+        transform: translateY(-1px);
+    }
+
+    @media (max-width: 768px) {
+        .subscription-result {
+            margin: 20px auto;
+            padding: 15px;
+        }
+
+        .result-card {
+            padding: 30px 20px;
+        }
+
+        .result-card h1 {
+            font-size: 24px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+    }
+</style>
+{% endblock %}
