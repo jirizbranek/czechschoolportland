@@ -2,32 +2,34 @@
 {% block content %}
 <h1>School Events Calendar</h1>
 {% if events %}
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Date</th>
-    <th>Time</th>
-    <th>Location</th>
-    <th>Description</th>
-    <th>Invitation</th>
-  </tr>
-  {% for e in events %}
-  <tr>
-    <td>{{ e[1] }}</td>
-    <td>{{ e[2] }}</td>
-    <td>{{ e[5] or '-' }}</td>
-    <td>{{ e[4] or '-' }}</td>
-    <td>{{ e[3] }}</td>
-    <td>
-      {% if e[6] %}
-      <a href="{{ e[6] }}" target="_blank">View Invitation</a>
-      {% else %}
-      -
-      {% endif %}
-    </td>
-  </tr>
-  {% endfor %}
-</table>
+<div class="table-wrapper">
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Location</th>
+      <th>Description</th>
+      <th>Invitation</th>
+    </tr>
+    {% for e in events %}
+    <tr>
+      <td>{{ e[1] }}</td>
+      <td>{{ e[2] }}</td>
+      <td>{{ e[5] or '-' }}</td>
+      <td>{{ e[4] or '-' }}</td>
+      <td>{{ e[3] }}</td>
+      <td>
+        {% if e[6] %}
+        <a href="{{ e[6] }}" target="_blank">View Invitation</a>
+        {% else %}
+        -
+        {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
 {% else %}
 <p>No events scheduled.</p>
 {% endif %}
