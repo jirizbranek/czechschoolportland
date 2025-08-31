@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from models.db import get_all_events, get_mailing_list, add_event, delete_event, delete_email, get_event_by_id, update_event
+import os
 
 admin_bp = Blueprint("admin", __name__)
 

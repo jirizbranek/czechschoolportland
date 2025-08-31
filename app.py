@@ -12,7 +12,13 @@ def create_app():
     app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
     
     # Google Analytics configuration
-    app.config['GOOGLE_ANALYTICS_ID'] = os.environ.get('GOOGLE_ANALYTICS_ID')
+    # For development, we can set a default value if not in environment
+    analytics_id = os.environ.get('GOOGLE_ANALYTICS_ID')
+    if not analytics_id and os.environ.get('FLASK_ENV') != 'production':
+        # Development fallback - use the ID from app.yaml for testing
+        analytics_id = 'G-XJ97NGS36D'  # Your test ID from app.yaml
+    
+    app.config['GOOGLE_ANALYTICS_ID'] = analytics_id
     
     # Configure logging for production
     if os.environ.get('FLASK_ENV') == 'production':

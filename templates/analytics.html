@@ -8,8 +8,10 @@
         <div class="analytics-card">
             <h3>📈 Quick Stats</h3>
             <p>View your website analytics in Google Analytics:</p>
+
             {% if config.get('GOOGLE_ANALYTICS_ID') %}
             <p><strong>Analytics ID:</strong> {{ config.GOOGLE_ANALYTICS_ID }}</p>
+            <p class="success">✅ Google Analytics is configured and active!</p>
             <a href="https://analytics.google.com" target="_blank" class="btn btn-primary">
                 Open Google Analytics →
             </a>
@@ -97,6 +99,11 @@
 
     .warning {
         color: #e74c3c;
+        font-weight: bold;
+    }
+
+    .success {
+        color: #27ae60;
         font-weight: bold;
     }
 
