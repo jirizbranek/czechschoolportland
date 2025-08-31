@@ -54,55 +54,6 @@
                     </tbody>
                 </table>
             </div>
-            
-            <!-- Mobile card layout -->
-            <div class="events-mobile-cards">
-                {% for e in events %}
-                <div class="event-card">
-                    <div class="event-card-header">
-                        <div class="event-title">{{ e[1] }}</div>
-                        <div class="event-action">
-                            <a href="{{ url_for('admin.edit_event_form', event_id=e[0]) }}"
-                                class="btn btn-primary btn-sm">
-                                Edit
-                            </a>
-                        </div>
-                    </div>
-                    <div class="event-details">
-                        <div class="event-detail">
-                            <span class="detail-label">Date:</span>
-                            <span class="detail-value">{{ e[2] }}</span>
-                        </div>
-                        {% if e[5] %}
-                        <div class="event-detail">
-                            <span class="detail-label">Time:</span>
-                            <span class="detail-value">{{ e[5] }}</span>
-                        </div>
-                        {% endif %}
-                        {% if e[4] %}
-                        <div class="event-detail">
-                            <span class="detail-label">Location:</span>
-                            <span class="detail-value">{{ e[4] }}</span>
-                        </div>
-                        {% endif %}
-                        {% if e[3] %}
-                        <div class="event-detail">
-                            <span class="detail-label">Description:</span>
-                            <span class="detail-value">{{ e[3] }}</span>
-                        </div>
-                        {% endif %}
-                        {% if e[6] %}
-                        <div class="event-detail">
-                            <span class="detail-label">Invitation:</span>
-                            <span class="detail-value">
-                                <a href="{{ e[6] }}" target="_blank">View Link</a>
-                            </span>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
             {% else %}
             <div class="no-events">
                 <p>No events found.</p>
@@ -222,10 +173,6 @@
     }
 
     @media (max-width: 768px) {
-        .admin-section {
-            padding: 15px;
-        }
-
         .events-container {
             grid-template-columns: 1fr;
         }
@@ -235,97 +182,6 @@
             align-items: flex-start;
             gap: 10px;
         }
-
-        .header-buttons {
-            flex-direction: column;
-            width: 100%;
-            gap: 10px;
-        }
-
-        .btn {
-            text-align: center;
-            width: 100%;
-        }
-
-        /* Hide table on mobile and show card layout instead */
-        .events-table table {
-            display: none;
-        }
-
-        .events-mobile-cards {
-            display: block;
-        }
-
-        .event-card {
-            background: white;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border: 1px solid #dee2e6;
-        }
-
-        .event-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 10px;
-            flex-wrap: wrap;
-        }
-
-        .event-title {
-            font-weight: bold;
-            color: #495057;
-            font-size: 16px;
-            margin-bottom: 5px;
-            flex: 1;
-        }
-
-        .event-action {
-            margin-left: 10px;
-        }
-
-        .event-details {
-            display: grid;
-            gap: 8px;
-        }
-
-        .event-detail {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .event-detail:last-child {
-            border-bottom: none;
-        }
-
-        .detail-label {
-            font-weight: bold;
-            color: #6c757d;
-            min-width: 80px;
-        }
-
-        .detail-value {
-            flex: 1;
-            text-align: right;
-            color: #495057;
-        }
-
-        .detail-value a {
-            color: #007bff;
-            text-decoration: none;
-        }
-
-        .detail-value a:hover {
-            text-decoration: underline;
-        }
-    }
-
-    /* Desktop view - hide mobile cards */
-    .events-mobile-cards {
-        display: none;
     }
 </style>
 {% endblock %}
