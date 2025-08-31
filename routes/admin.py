@@ -58,3 +58,8 @@ def manage_mailing():
     
     mailing_list = get_mailing_list()
     return render_template("admin_mailing.html", mailing_list=mailing_list)
+
+@admin_bp.route("/analytics")
+def analytics():
+    """Display analytics dashboard and configuration."""
+    return render_template("analytics.html")

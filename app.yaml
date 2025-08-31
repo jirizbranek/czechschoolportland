@@ -4,6 +4,11 @@ env_variables:
   FLASK_ENV: production
   DATABASE_PATH: "/tmp/school.db"
   SECRET_KEY: "your-production-secret-key-change-this"
+  
+  # Google Analytics Configuration
+  # Get your GA4 Measurement ID from https://analytics.google.com
+  # Format: G-XXXXXXXXXX
+  GOOGLE_ANALYTICS_ID: "G-XJ97NGS36D"
 
 automatic_scaling:
   min_instances: 0

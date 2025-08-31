@@ -5,6 +5,28 @@
   <title>School Website</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Google Analytics -->
+  {% if config.get('GOOGLE_ANALYTICS_ID') %}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ config.GOOGLE_ANALYTICS_ID }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', '{{ config.GOOGLE_ANALYTICS_ID }}', {
+      page_title: document.title,
+      page_location: window.location.href,
+      // Privacy-friendly settings
+      anonymize_ip: true,
+      allow_google_signals: false,
+      allow_ad_personalization_signals: false
+    });
+  </script>
+
+  <!-- Custom School Analytics -->
+  <script src="{{ url_for('static', filename='js/analytics.js') }}" defer></script>
+  {% endif %}
 </head>
 
 <body>

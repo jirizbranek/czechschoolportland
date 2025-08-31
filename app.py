@@ -11,6 +11,9 @@ def create_app():
     # Set secret key for session management
     app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
     
+    # Google Analytics configuration
+    app.config['GOOGLE_ANALYTICS_ID'] = os.environ.get('GOOGLE_ANALYTICS_ID')
+    
     # Configure logging for production
     if os.environ.get('FLASK_ENV') == 'production':
         # Google Cloud Logging
